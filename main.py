@@ -17,3 +17,4 @@ all_record = collection.find()
 
 for idx,record in enumerate(all_record):
     print(f"{idx}: {record}")
+    
