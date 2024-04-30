@@ -1,4 +1,4 @@
-from sensor import utils
+from sensor.utils import utils
 from sensor.entity import config_entity
 from sensor.entity import artifact_entity
 from sensor.exception import SensorException
