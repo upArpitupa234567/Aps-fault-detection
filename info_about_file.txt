@@ -1,0 +1,3 @@
+->after doing data ingestion we have to perform data validation
+->for that we check we train and test.csv file of artifact folder with the main file of aps_failure_training_set1.csv if that is matching that means we are able to validate the data
+-> how we can detect this ? we use scipy.stats library inside that we use 2 sided test

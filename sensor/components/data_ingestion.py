@@ -1,4 +1,4 @@
-from sensor.utils import utils
+from sensor import utils
 from sensor.entity import config_entity
 from sensor.entity import artifact_entity
 from sensor.exception import SensorException
@@ -10,6 +10,7 @@ import numpy as np
 
 class DataIngestion:
     def __init__(self,data_ingestion_config:config_entity.DataIngestionConfig):
+        logging.info(f"{'>>'*20} Data Ingestion {'<<'*20}")
         try:
             self.data_ingestion_config=data_ingestion_config
         except Exception as e:
@@ -21,9 +22,10 @@ class DataIngestion:
             #Exporting collection data as pandas dataframe
             df:pd.DataFrame = utils.get_collection_as_dataframe(
                 database_name=self.data_ingestion_config.database_name,
-                collection_name = self.data_ingestion_config.collection_name
-                )
-            #save data in feature store
+                collection_name = self.data_ingestion_config.collection_name)
+            
+            logging.info("Save data in feature store")
+            #replace na with NAN
             df.replace(to_replace="na",value=np.NAN,inplace =True)
             
             #Save data in feature store
@@ -38,13 +40,14 @@ class DataIngestion:
             
             logging.info("split dataset into train and test set")    
             #split dataset into train and test set
-            train_df,test_df = train_test_split(df,test_size=self.data_ingestion_config.test_size,random_state=42)
+            train_df,test_df = train_test_split(df,test_size=self.data_ingestion_config.test_size)
 
             logging.info("create dataset directory folder if not available")
             #create dataset directory if not available
             dataset_dir = os.path.dirname(self.data_ingestion_config.train_file_path)
             os.makedirs(dataset_dir,exist_ok=True)
-            logging.info("created dataset directory ")
+
+            logging.info("Save df to feature store folder ")
 
             #Save df to feature store folder
             # train_df.to_csv(path_or_buf=self.data_ingestion_config.feature_store_file_path)
@@ -57,8 +60,8 @@ class DataIngestion:
             data_ingestion_artifact = artifact_entity.DataIngestionArtifact(
                 feature_store_file_path= self.data_ingestion_config.feature_store_file_path,
                 train_file_path=self.data_ingestion_config.train_file_path,
-                test_file_path = self.data_ingestion_config.test_file_path
-            )
+                test_file_path = self.data_ingestion_config.test_file_path)
+            
            
             logging.info("data ingestion")
             logging.info(f"Data ingestion artifact: {data_ingestion_artifact}")

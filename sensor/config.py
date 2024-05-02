@@ -11,7 +11,7 @@ class EnvironmentVariable:
     aws_access_secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
 
 # env_var = EnvironmentVariable()
-# mongo_client = pymongo.MongoClient(env_var)
+# mongo_client = pymongo.MongoClient(env_var.mongo_db_url)
 env_var = EnvironmentVariable()
 
 mongo_uri = env_var.mongo_db_url  # Assuming "mongo_db_url" is your MongoDB connection string
