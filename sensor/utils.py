@@ -95,7 +95,7 @@ def save_object(file_path:str, obj: object) -> None:
 #for save something we use dill.dump as above code mentioned
 #for load something we use dill.laod mention below code
 
-def load_object(file_path: str) ->object:
+def load_object(file_path: str,) ->object:
     try:
         if not os.path.exists(file_path):
             raise Exception(f"The file {file_path} is not exists")
